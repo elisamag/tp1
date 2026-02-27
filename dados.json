@@ -1,1 +1,14 @@
-[]
+app.get('/exibir-contatos', (req, res) => {
+    // a) Leia os dados do arquivo
+    fs.readFile('dados.json', 'utf8', (err, data) => {
+        let contatos = [];
+        
+        if (!err && data) {
+            // Converte o texto do arquivo para objetos JSON em um vetor
+            contatos = JSON.parse(data);
+        }
+
+        // b) Renderiza o EJS passando o vetor como parâmetro
+        res.render('listaContatos', { lista: contatos });
+    });
+});
