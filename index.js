@@ -6,14 +6,14 @@ app.set('view engine', 'ejs');
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 
-// Rotas
+
 app.get('/', (req, res) => res.render('index'));
 app.get('/produto', (req, res) => res.render('produto'));
 app.get('/fotos', (req, res) => res.render('fotos'));
 app.get('/detalhes', (req, res) => res.render('detalhes'));
 app.get('/contato', (req, res) => res.render('contato'));
 
-// Rota POST para salvar o formulário
+
 app.post('/contato', (req, res) => {
     const dados = req.body;
     
@@ -33,7 +33,26 @@ app.post('/contato', (req, res) => {
     });
 });
 
-// Porta fixa em 3000 para teste
+
+app.get('/lista', (req, res) => {
+    fs.readFile('dados.json', 'utf8', (err, content) => {
+        let vetorDados = [];
+        
+        if (!err && content) {
+
+            try {
+                vetorDados = JSON.parse(content);
+            } catch (e) {
+                vetorDados = [];
+            }
+        }
+
+
+        res.render('lista', { lista: vetorDados });
+    });
+});
+
+
 app.listen(3000, () => {
     console.log("-----------------------------------------");
     console.log("SERVIDOR ONLINE EM: http://localhost:3000");
