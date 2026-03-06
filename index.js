@@ -53,6 +53,29 @@ app.get('/lista', (req, res) => {
 });
 
 
+app.get('/apagar', (req, res) => {
+    const id = req.query.id; 
+
+    fs.readFile('dados.json', 'utf8', (err, content) => {
+        if (err) return res.send("Erro ao ler arquivo");
+
+        let vetorDados = JSON.parse(content);
+
+        if (id !== undefined && vetorDados[id]) {
+            vetorDados.splice(id, 1); 
+        }
+
+       
+        fs.writeFile('dados.json', JSON.stringify(vetorDados, null, 2), (err) => {
+            if (err) return res.send("Erro ao atualizar arquivo");
+            
+           
+            res.redirect('/lista');
+        });
+    });
+});
+
+
 app.listen(3000, () => {
     console.log("-----------------------------------------");
     console.log("SERVIDOR ONLINE EM: http://localhost:3000");
