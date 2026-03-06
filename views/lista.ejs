@@ -11,6 +11,21 @@
     <div class="list-group">
         <% if (lista.length > 0) { %>
             <% lista.forEach(function(item) { %>
+                <% if (lista.length > 0) { %>
+                    <% lista.forEach(function(item, index) { %>
+                        <tr>
+                            <td><%= item.nome %></td>
+                            <td><%= item.mensagem %></td>
+                            <td>
+                                <a href="/apagar?id=<%= index %>" 
+                                   class="btn btn-danger btn-sm" 
+                                   onclick="return confirm('Tem certeza que deseja excluir?')">
+                                   Apagar
+                                </a>
+                            </td>
+                        </tr>
+                    <% }); %>
+                <% } %>
                 <div class="list-group-item shadow-sm mb-2">
                     <h5>Nome: <%= item.nome %></h5>
                     <p>Mensagem: <%= item.mensagem %></p>
